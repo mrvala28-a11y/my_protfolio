@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-textPrimary font-sans antialiased overflow-x-hidden;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #16a34a;
+}
+
+/* Footer Signature Text Stroke Effect */
+.signature-text {
+  position: relative;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-weight: 900;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2.5px #22c55e;
+  text-stroke: 2.5px #22c55e;
+  transition: all 0.7s ease;
+}
+
+.signature-text-fill {
+  position: absolute;
+  inset: 0;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-weight: 900;
+  -webkit-text-fill-color: #22c55e;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background: linear-gradient(90deg, #22c55e 0%, #22c55e 100%);
+  background-size: 0% 100%;
+  background-position: 100% 0;
+  transition: background-size 0.7s ease, background-position 0.7s ease;
+  opacity: 0;
+}
+
+.signature-text:hover .signature-text-fill {
+  opacity: 1;
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+}
