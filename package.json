@@ -2,14 +2,23 @@
   "name": "vivek-portfolio",
   "version": "1.0.0",
   "description": "Full-stack MERN portfolio with WhatsApp integration",
+  "main": "server/server.js",
   "scripts": {
     "install:all": "npm install && cd client && npm install && cd ../server && npm install",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start"
   },
-  "keywords": ["portfolio", "mern", "fullstack"],
+  "keywords": [
+    "portfolio",
+    "mern",
+    "fullstack"
+  ],
   "author": "Vivek Vala",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
 }
