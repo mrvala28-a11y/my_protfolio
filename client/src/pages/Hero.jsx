@@ -10,24 +10,25 @@ const Hero = ({ aboutRef }) => {
   return (
     <section 
       id="home" 
-      className="min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden relative"
-      style={{ position: 'relative' }}
+      className="min-h-[85vh] md:min-h-[90vh] flex items-center justify-center pt-0 px-6 overflow-hidden relative"
     >
       {/* Background soft orbs */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-1/4 right-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl -z-10" />
 
-<div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-16 md:gap-12">
+      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8">
+        
         {/* LEFT: Text content */}
         <motion.div
-          className="flex-1 space-y-6 text-center md:text-left order-1"
+          className="flex-1 space-y-3 md:space-y-4 text-center md:text-left order-1"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-<h2 className="text-xl md:text-2xl font-medium text-gray-500">
+          <h2 className="text-xl md:text-2xl font-medium text-gray-500">
             Hey There,
           </h2>
+
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-textPrimary leading-tight">
             I'm <span className="text-primary relative inline-block">
               Vivek Vala
@@ -39,6 +40,7 @@ const Hero = ({ aboutRef }) => {
               />
             </span>
           </h1>
+
           <p className="text-base md:text-lg text-gray-600 max-w-lg mx-auto md:mx-0 leading-relaxed">
             I design and develop high-quality website experiences that make people's lives simpler through code and creativity.
           </p>
@@ -56,8 +58,13 @@ const Hero = ({ aboutRef }) => {
           </div>
         </motion.div>
 
-{/* RIGHT: Profile Image - Clean circular */}
-        <div className="flex-1 flex justify-center order-2 md:order-2">
+        {/* RIGHT: Profile Image - Animated AFTER text */}
+        <motion.div
+          className="flex-1 flex justify-center order-2 md:order-2"
+          initial={{ opacity: 0, scale: 0.8, x: 50 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+        >
           <div 
             className="rounded-full overflow-hidden border-2 border-gray-200 shadow-lg"
             style={{
@@ -65,15 +72,19 @@ const Hero = ({ aboutRef }) => {
               height: 'clamp(200px, 35vw, 320px)',
             }}
           >
-            <img
+            <motion.img
               src="/pro.jpeg"
               alt="Vivek Vala - Full Stack Developer"
               className="w-full h-full object-cover object-center"
               loading="eager"
               draggable="false"
+              initial={{ scale: 1.2 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
             />
           </div>
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );

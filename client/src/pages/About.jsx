@@ -208,7 +208,7 @@ className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 m
               hidden: { opacity: 0, x: -30, scale: 0.95 },
               visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.8, delay: 0.3, ease: "easeOut" } },
             }}
-            className="flex justify-center lg:justify-start"
+            className="hidden md:flex justify-center lg:justify-start"
           >
             <div 
               className="rounded-full overflow-hidden border-2 border-gray-200 shadow-lg"
@@ -587,10 +587,12 @@ className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 m
             visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } },
           }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-20"
-        >
+>
           <motion.a
-            href="/VivekVala_Resume.pdf"
-            download="VivekVala_Resume.pdf"
+            href="/Vivek_Vala_Resume.pdf"
+            download="Vivek_Vala_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="group relative flex items-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all duration-300 overflow-hidden"
