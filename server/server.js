@@ -19,11 +19,6 @@ app.get('/', (req, res) => {
   res.send('API running 🚀');
 });
 
-// Debug ENV (check once)
-console.log("ENV CHECK:");
-// console.log(process.env.TWILIO_ACCOUNT_SID);
-// console.log(process.env.TWILIO_AUTH_TOKEN);
-// console.log(process.env.ADMIN_WHATSAPP);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
