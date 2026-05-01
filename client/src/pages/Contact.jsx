@@ -63,6 +63,8 @@ const Contact = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -74,7 +76,7 @@ const handleSubmit = async (e) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
