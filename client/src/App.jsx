@@ -3,15 +3,13 @@ import IntroLoader from './components/IntroLoader';
 import Navbar from './components/Navbar';
 import CustomCursor from './components/CustomCursor';
 import Hero from './pages/Hero';
-import Approach from './pages/Approach';
-import About from './pages/About';
+import Approach from './pages/Approach'; // ✅ ADD
 import Skills from './pages/Skills';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import FooterSignature from './components/FooterSignature';
-import BackToTop from './components/BackToTop';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import About from './pages/About';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -26,14 +24,12 @@ function App() {
           <Navbar />
           <main>
             <Hero />
-            
-            <About />
+            {/* ✅ NOW IT WILL SHOW */}
             <Skills />
             <Approach />
+            <About/>
             <Projects />
-<Contact />
-<FooterSignature />
-            <BackToTop />
+            <Contact />
           </main>
           <ToastContainer position="bottom-right" />
         </div>

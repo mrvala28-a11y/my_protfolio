@@ -1,13 +1,50 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { FaDownload, FaEnvelope, FaAward, FaCode, FaBrain, FaRocket, FaGraduationCap } from 'react-icons/fa';
 import { SiReact, SiJavascript, SiTailwindcss, SiNodedotjs, SiMongodb, SiExpress } from 'react-icons/si';
+
+// Timeline Marker Component - handles scroll-based activation
+const TimelineMarker = ({ index, total, progress }) => {
+  const itemProgress = (index + 1) / total;
+  const activationStart = itemProgress - 0.15;
+  
+  const scale = useTransform(
+    progress,
+    [0, activationStart, itemProgress],
+    [1, 1, 1.4]
+  );
+  
+  const backgroundColor = useTransform(
+    progress,
+    [activationStart, itemProgress],
+    ["#ffffff", "#22c55e"]
+  );
+  
+  const boxShadow = useTransform(
+    progress,
+    [activationStart, itemProgress],
+    ["0 2px 8px rgba(0,0,0,0.1)", "0 0 20px rgba(34, 197, 94, 0.5)"]
+  );
+  
+  return (
+    <motion.div
+      className="absolute left-[32px] top-0 w-5 h-5 rounded-full -translate-x-1/2 shadow-lg md:left-1/2 md:-translate-x-1/2 border-[3px] border-green-500"
+      style={{
+        scale,
+        backgroundColor,
+        boxShadow,
+      }}
+      whileHover={{ scale: 1.3 }}
+    />
+  );
+};
 
 const About = () => {
   const sectionRef = useRef(null);
   const heroRef = useRef(null);
   const statsRef = useRef(null);
   const timelineRef = useRef(null);
+  const timelineItemsRef = useRef([]);
 
   // Scroll-based animations
   const { scrollYProgress } = useScroll({
@@ -15,13 +52,23 @@ const About = () => {
     offset: ["start end", "end start"]
   });
 
+  // Timeline scroll tracking
   const { scrollYProgress: timelineScrollProgress } = useScroll({
     target: timelineRef,
-    offset: ["start end", "end start"],
+    offset: ["start end", "end end"],
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const smoothTimelineProgress = useSpring(timelineScrollProgress, { stiffness: 100, damping: 30 });
+const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  
+  // Smooth timeline progress with spring for fluid animation
+  const smoothTimelineProgress = useSpring(timelineScrollProgress, { stiffness: 50, damping: 20, restDelta: 0.001 });
+
+  // Line height animation - grows from top to bottom as user scrolls
+  const lineHeight = useTransform(
+    smoothTimelineProgress,
+    [0, 1],
+    [0, 1]
+  );
 
   // Animated counters
   const [counters, setCounters] = useState({ projects: 0, experience: 0, hours: 0, passion: 0 });
@@ -452,40 +499,42 @@ className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 m
             </motion.h3>
           </div>
 
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200" />
+<div className="relative md:block">
+            {/* Timeline line - Mobile: exactly at 32px (left-8 = 2rem = 32px), Desktop: centered */}
+            <div className="absolute left-[32px] top-0 bottom-0 w-[2px] bg-gray-200 md:left-1/2 md:w-0.5" />
 
-            {/* Animated progress line */}
+{/* Animated progress line - Mobile: exactly at 32px, Desktop: centered */}
+            {/* Grows from top to bottom as user scrolls down */}
             <motion.div
-              className="absolute left-8 md:left-1/2 top-0 w-0.5 bg-gradient-to-b from-green-500 to-emerald-400"
+              className="absolute left-[32px] top-0 w-[2px] bg-gradient-to-b from-green-500 to-emerald-400 md:left-1/2 md:w-0.5 origin-top"
               style={{
-                height: smoothTimelineProgress.get() * 100 + "%",
+                scaleY: lineHeight,
               }}
-              transition={{ type: "spring", stiffness: 100, damping: 30 }}
             />
 
-            {timeline.map((item, index) => (
+ {timeline.map((item, index) => (
               <motion.div
                 key={item.year}
+                style={{ marginBottom: '3rem' }}
+                ref={(el) => (timelineItemsRef.current[index] = el)}
                 variants={{
-                  hidden: { opacity: 0, x: index % 2 === 0 ? -50 : 50 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
                 }}
-                className={`relative mb-12 md:mb-16 ${
-                  index % 2 === 0 ? "md:pr-[50%] md:text-right" : "md:pl-[50%]"
-                }`}
+                className="relative mb-12 md:mb-16 flex md:block"
               >
-                {/* Timeline dot */}
-                <motion.div
-                  className="absolute left-8 md:left-1/2 top-0 w-5 h-5 bg-white border-4 border-green-500 rounded-full -translate-x-1/2 shadow-lg hover:scale-125 transition-transform duration-300"
-                  whileHover={{ scale: 1.3 }}
+                {/* Timeline dot - Mobile: exactly centered on line at 32px using translate, Desktop: centered */}
+                {/* Activates (scales up + turns green) when scroll line reaches it */}
+                <TimelineMarker 
+                  index={index} 
+                  total={timeline.length} 
+                  progress={smoothTimelineProgress} 
                 />
 
-                {/* Content card */}
+                {/* Content card - Mobile: proper left spacing from line (32px line + 16px gap + card padding = 48pxml works), Desktop: centered */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 inline-block min-w-[280px] md:min-w-[350px]"
+                  className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 ml-[52px] md:ml-0 md:inline-block md:min-w-[350px]"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
@@ -494,14 +543,14 @@ className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center mb-20 m
                     <span className="text-sm font-bold text-green-600">{item.year}</span>
                   </div>
                   <h4 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                   <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
+                 </motion.div>
+               </motion.div>
+             )}
+           </div>
+         </motion.div>
 
-        {/* SKILLS SECTION */}
+         {/* SKILLS SECTION */}
         <motion.div
           initial="hidden"
           whileInView="visible"
