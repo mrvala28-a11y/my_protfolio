@@ -14,9 +14,13 @@ const Navbar = () => {
   const links = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
 
   const handleNavClick = (id) => {
-    const element = document.getElementById(id.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (id === 'resume') {
+      window.open('/Vivek_Vala_Resume.pdf', '_blank');
+    } else {
+      const element = document.getElementById(id.toLowerCase());
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setMobileOpen(false);
   };
@@ -97,12 +101,28 @@ const Navbar = () => {
             </div>
             
             {/* Desktop Navigation */}
-            <ul className="hidden md:flex items-center space-x-6 lg:space-x-8 font-medium text-sm text-gray-700">
+            <ul className="hidden md:flex items-center space-x-6 lg:space-x-8 font-medium text-sm">
               {links.map((link) => (
                 <li key={link}>
                   <LotteryLink text={link} onClick={() => handleNavClick(link)} />
                 </li>
               ))}
+              <li>
+                <motion.a
+                  href="/Vivek_Vala_Resume.pdf"
+                  download="Vivek_Vala_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-gray-700 hover:text-primary transition-colors font-medium"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Resume
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </motion.a>
+              </li>
             </ul>
             
             {/* Mobile Hamburger Button */}
@@ -155,6 +175,21 @@ const Navbar = () => {
                   {link}
                 </motion.button>
               ))}
+              <motion.a
+                href="/Vivek_Vala_Resume.pdf"
+                download="Vivek_Vala_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: links.length * 0.1 }}
+                className="inline-flex items-center gap-2 text-2xl font-semibold text-gray-800 hover:text-primary transition-colors"
+              >
+                Resume
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </motion.a>
             </div>
           </motion.div>
         )}

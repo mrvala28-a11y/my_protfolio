@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { Send, Download } from 'lucide-react';
 
 const Hero = ({ aboutRef }) => {
   const handleContactClick = () => {
@@ -45,7 +45,7 @@ const Hero = ({ aboutRef }) => {
             I design and develop high-quality website experiences that make people's lives simpler through code and creativity.
           </p>
 
-          <div className="pt-4 flex justify-center md:justify-start">
+          <div className="pt-4 flex justify-center md:justify-start gap-4">
             <motion.button
               onClick={handleContactClick}
               whileHover={{ scale: 1.05 }}
@@ -55,6 +55,18 @@ const Hero = ({ aboutRef }) => {
               Say Hello
               <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </motion.button>
+            <motion.a
+              href="/Vivek_Vala_Resume.pdf"
+              download="Vivek_Vala_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transition-all"
+            >
+              Resume
+              <Download size={18} className="group-hover:-translate-y-1 transition-transform" />
+            </motion.a>
           </div>
         </motion.div>
 
